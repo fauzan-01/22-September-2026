@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Sederhana</title>
+
+    <style>
+        /* Selector universal */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        /* Selector tag */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4fbf4;
+            color: #1f2937;
+        }
+
+        /* Selector class */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            background-color: #1e3a8a;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Jarak antara logo dan teks */
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Styling ukuran logo kecil di navbar */
+        .logo img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        /* Selector child */
+        .menu > li {
+            display: inline-block;
+            list-style: none;
+            margin-left: 25px;
+        }
+
+        /* Selector descendant */
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        /* Pseudo-class */
+        .menu a:hover,
+        .menu a.active {
+            color: #facc15;
+        }
+
+        /* Selector ID */
+        #home {
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 80px 8%;
+            background: linear-gradient(135deg, #dbeafe, #eff6ff);
+        }
+
+        /* Styling untuk foto di sebelah kiri (Bentuk Kotak) */
+        .hero-image {
+            flex-shrink: 0;
+        }
+
+        .hero-image img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-text {
+            max-width: 550px;
+        }
+
+        .hero-text h1 {
+            font-size: 45px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        section {
+            padding: 70px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 35px;
+            font-size: 32px;
+        }
+
+        /* Pseudo-element */
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 70px;
+            height: 4px;
+            margin: 10px auto;
+            background-color: #f59e0b;
+            border-radius: 5px;
+        }
+
+        /* Mengatur agar bagian profesi menjadi 4 kolom (2 baris total 8 kotak) */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        /* Mengatur grid khusus untuk Skill Desktop Development (6 kotak: 3 kolom x 2 baris) */
+        .skills-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* Mengatur grid khusus untuk Tools & Teknologi (12 kotak: 4 kolom x 3 baris) */
+        .tools-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        .card .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #1e3a8a;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            line-height: 1.6;
+            color: #64748b;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.4);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background-color: #1e3a8a;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #2563eb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #1e3a8a;
+            color: white;
+        }
+
+        /* Tombol menu mobile */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Tampilan tablet dan handphone */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                right: 8%;
+                width: 200px;
+                padding: 15px;
+                background-color: #1e3a8a;
+                border-radius: 8px;
+            }
+
+            .menu.show {
+                display: block;
+            }
+
+            .menu > li {
+                display: block;
+                margin: 15px 0;
+            }
+
+            #home {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero-image img {
+                width: 220px;
+                height: 220px;
+            }
+
+            .hero-text h1 {
+                font-size: 35px;
+            }
+
+            .cards,
+            .skills-cards,
+            .tools-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi -->
+    <nav class="navbar">
+        <div class="logo">
+            <!-- Logo kecil di sebelah kiri teks -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHakUjG81Rx_ExAheFTmzmcswcdpLaEq1basIF5rUxsaWvadEhooAcOxMz&s=10" alt="Logo SMKN 1 Subang">
+            SMKN 1 Subang
+        </div>
+
+        <button class="menu-toggle" id="menuToggle">
+            ☰
+        </button>
+
+        <ul class="menu" id="menu">
+            <li><a href="#home" class="active">Beranda</a></li>
+            <li><a href="#Profesi">Profesi</a></li>
+            <li><a href="#skill">Skill</a></li>
+            <li><a href="#kontak">Tools & Teknologi</a></li>
+        </ul>
+    </nav>
+
+    <!-- Bagian Beranda -->
+    <main>
+        <section id="home">
+            <div class="hero-image">
+                <img src="https://cogentsoftech.com/desktop-application-development.png" alt="Foto Profil">
+            </div>
+
+            <div class="hero-text">
+                <h1>Desktop Development</h1>
+                <p>
+                    Desktop development adalah proses pembuatan aplikasi yang berjalan langsung di komputer pribadi dengan antarmuka grafis (GUI) dan akses langsung ke sistem operasi serta perangkat keras.
+                </p>
+            </div>
+        </section>
+
+        <!-- Bagian Profesi (Total 8 Kotak, 4 Kolom x 2 Baris) -->
+        <section id="Profesi">
+            <h2 class="section-title">Profesi kami</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <div class="icon">🎨</div>
+                    <h3>Desain Menarik</h3>
+                    <p>Tampilan menggunakan warna, jarak, dan tata letak yang nyaman dilihat.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">💻</div>
+                    <h3>Frontend Dev</h3>
+                    <p>Membangun antarmuka pengguna yang interaktif dan responsif di browser.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚙️</div>
+                    <h3>Backend Dev</h3>
+                    <p>Mengelola database, server, dan logika di balik layar aplikasi.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <h3>Mobile Dev</h3>
+                    <p>Membuat aplikasi berbasis Android dan iOS yang fleksibel.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🧪</div>
+                    <h3>QA Testing</h3>
+                    <p>Memastikan aplikasi bebas dari bug dan berjalan dengan lancar.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h3>Cyber Security</h3>
+                    <p>Melindungi sistem dan data pengguna dari ancaman keamanan.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>Data Analyst</h3>
+                    <p>Menganalisis data kompleks untuk membantu pengambilan keputusan.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>UI/UX Designer</h3>
+                    <p>Merancang pengalaman dan alur penggunaan aplikasi yang intuitif.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian Skill Desktop Development (Total 6 Kotak, 3 Kolom x 2 Baris) -->
+        <section id="skill">
+            <h2 class="section-title">Skill Desktop Development</h2>
+
+            <div class="skills-cards">
+                <div class="card">
+                    <div class="icon">🖥️</div>
+                    <h3>GUI Programming</h3>
+                    <p>Merancang antarmuka grafis interaktif menggunakan framework seperti Windows Forms atau WPF.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>Multithreading</h3>
+                    <p>Mengoptimalkan kinerja aplikasi agar proses berat berjalan lancar tanpa membuat UI macet (lag).</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🔌</div>
+                    <h3>Hardware Access</h3>
+                    <p>Kemampuan mengintegrasikan aplikasi dengan perangkat keras komputer seperti printer atau USB.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📦</div>
+                    <h3>Packaging & Installer</h3>
+                    <p>Membuat file instalasi (seperti .exe atau .msi) agar aplikasi mudah dipasang oleh pengguna.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🗄️</div>
+                    <h3>Local Database</h3>
+                    <p>Mengelola penyimpanan data lokal menggunakan SQLite, MySQL, atau LocalDB secara efisien.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🔧</div>
+                    <h3>System Optimization</h3>
+                    <p>Memastikan penggunaan memori (RAM) dan sumber daya CPU aplikasi tetap ringan dan stabil.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian Tools & Teknologi (Total 12 Kotak, 4 Kolom x 3 Baris) -->
+        <section id="kontak">
+            <h2 class="section-title">Tools & Teknologi</h2>
+
+            <div class="tools-cards" style="margin-bottom: 50px;">
+                <div class="card">
+                    <div class="icon">🌐</div>
+                    <h3>HTML5</h3>
+                    <p>Bahasa markup standar untuk menyusun struktur halaman web.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🎨</div>
+                    <h3>CSS3</h3>
+                    <p>Mengatur tampilan, tata letak, warna, dan gaya visual website.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>JavaScript</h3>
+                    <p>Bahasa pemrograman untuk membuat website menjadi interaktif.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚛️</div>
+                    <h3>React.js</h3>
+                    <p>Pustaka JavaScript populer untuk membangun antarmuka pengguna.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🟢</div>
+                    <h3>Node.js</h3>
+                    <p>Runtime JavaScript di sisi server untuk backend yang cepat.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🐍</div>
+                    <h3>Python</h3>
+                    <p>Bahasa pemrograman serbaguna untuk data science dan backend.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🗄️</div>
+                    <h3>MySQL</h3>
+                    <p>Sistem manajemen database relasional yang handal dan aman.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🐙</div>
+                    <h3>Git & GitHub</h3>
+                    <p>Penyimpanan kode sumber dan kontrol versi kolaboratif.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🛠️</div>
+                    <h3>VS Code</h3>
+                    <p>Text editor andalan para pengembang untuk menulis kode.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🚀</div>
+                    <h3>Postman</h3>
+                    <p>Tools untuk menguji dan mendokumentasikan API backend.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📦</div>
+                    <h3>Docker</h3>
+                    <p>Wadah virtualisasi untuk menjalankan aplikasi secara konsisten.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">☁️</div>
+                    <h3>Firebase</h3>
+                    <p>Platform backend cloud untuk pengembangan aplikasi web dan mobile.</p>
+                </div>
+            </div>
+
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SMKN 1 Subang. NESAS Beraksi.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector("#menuToggle");
+        const menu = document.querySelector("#menu");
+
+        menuToggle.addEventListener("click", function () {
+            menu.classList.toggle("show");
+        });
+
+        const menuLinks = document.querySelectorAll(".menu a");
+
+        menuLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                menuLinks.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+
+                link.classList.add("active");
+                menu.classList.remove("show");
+            });
+        });
+    </script>
+
+</body>
+</html>
